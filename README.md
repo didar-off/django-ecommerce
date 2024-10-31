@@ -35,8 +35,11 @@ Contributions are welcome! Please follow these steps:
 ## 📧 Contact
 For questions or suggestions, feel free to reach out:
 
-Your Name - didarkuliew54@gmail.com
+Email: didarkuliew54@gmail.com <br>
 GitHub: didar-off
+
+## ⚠️ Demo Version
+This project is currently under development and is improving every day.
 
 ---
 
