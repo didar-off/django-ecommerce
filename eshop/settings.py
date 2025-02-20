@@ -154,6 +154,10 @@ AUTH_USER_MODEL = 'userauths.User'
 LOGOUT_REDIRECT_URL = "userauths:sign-in"
 LOGIN_URL = "userauths:sign-in"
 
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

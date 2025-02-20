@@ -124,9 +124,9 @@
                         <div class="header-info">
                             <ul>
                                 <li><a href="page-about.htlm">About Us</a></li>
-                                {% comment %} <li><a href="{% url "customer:dashboard" %}">My Account</a></li> {% endcomment %}
-                                {% comment %} <li><a href="{% url "customer:wishlist" %}">Wishlist</a></li> {% endcomment %}
-                                {% comment %} <li><a href="{% url "customer:dashboard" %}">Order Tracking</a></li> {% endcomment %}
+                                <li><a href="">My Account</a></li>
+                                <li><a href="">Wishlist</a></li>
+                                <li><a href="">Order Tracking</a></li>
                             </ul>
                         </div>
                     </div>
@@ -187,7 +187,7 @@
                     </div>
                     <div class="header-right">
                         <div class="search-style-2">
-                            {% comment %} <form action="{% url "store:search" %}" method="GET"> {% endcomment %}
+                            <form action="" method="GET">
                                 <select class="select-active">
                                     <option>All Categories</option>
                                     {% for i in categories %}
@@ -232,14 +232,14 @@
                                         <img class="svgInject" alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-heart.svg' %}" />
                                         <span class="pro-count blue">6</span>
                                     </a>
-                                    {% comment %} <a href="{% url "customer:wishlist" %}"><span class="lable">Wishlist</span></a> {% endcomment %}
+                                    <a href=""><span class="lable">Wishlist</span></a>
                                 </div>
                                 <div class="header-action-icon-2">
-                                    {% comment %} <a class="mini-cart-icon" href="{% url "store:cart" %}"> {% endcomment %}
+                                    <a class="mini-cart-icon" href="">
                                         <img alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-cart.svg' %}" />
                                         <span class="pro-count blue total_cart_items">{{total_cart_items}}</span>
                                     </a>
-                                    {% comment %} <a href="{% url "store:cart" %}"><span class="lable">Cart</span></a> {% endcomment %}
+                                    <a href=""><span class="lable">Cart</span></a>
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                         <ul>
                                             <li>
@@ -283,25 +283,25 @@
                                         <img class="svgInject" alt="Nest" src="{% static 'assets/imgs/theme/icons/icon-user.svg' %}" />
                                     </a>
                                     {% if user.is_authenticated %}
-                                    {% comment %} <a href="{% url "customer:dashboard" %}"><span class="lable ml-0">{{request.user.username}}</span></a> {% endcomment %}
+                                    <a href=""><span class="lable ml-0">{{request.user.username}}</span></a>
                                     {% else %}
-                                    {% comment %} <a href="{% url "userauths:sign-in" %}"><span class="lable ml-0">Account</span></a> {% endcomment %}
+                                    <a href="{% url "userauths:sign-in" %}"><span class="lable ml-0">Account</span></a>
                                     {% endif %}
                                     <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                         <ul>
-                                            {% comment %} <li><a href="{% url "customer:dashboard" %}"><i class="fi fi-rs-user mr-10"></i>My Account</a></li> {% endcomment %}
+                                            <li><a href=""><i class="fi fi-rs-user mr-10"></i>My Account</a></li>
                                             <li><a href="page-account.html"><i class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a></li>
                                             <li><a href="page-account.html"><i class="fi fi-rs-label mr-10"></i>My Voucher</a></li>
                                             <li><a href="shop-wishlist.html"><i class="fi fi-rs-heart mr-10"></i>My Wishlist</a></li>
-                                            {% comment %} {% if user.profile.user_type == 'Vendor' %}
-                                            <li><a href="{% url "vendor:dashboard" %}"><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a></li>
+                                            {% if user.profile.user_type == 'Vendor' %}
+                                            <li><a href=""><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a></li>
                                             {% endif %}
                                             {% if user.is_authenticated %}
                                             <li><a href="{% url "userauths:sign-out" %}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a></li>
                                             {% else %}
                                             <li><a href="{% url "userauths:sign-in" %}"><i class="fi fi-rs-sign-out mr-10"></i>Sign In</a></li>
                                             <li><a href="{% url "userauths:sign-up" %}"><i class="fi fi-rs-sign-out mr-10"></i>Sign Up</a></li>
-                                            {% endif %} {% endcomment %}
+                                            {% endif %}
                                         </ul>
                                     </div>
                                 </div>
@@ -328,7 +328,7 @@
                                     <ul>
                                         {% for i in categories %}
                                         <li>
-                                            {% comment %} <a href="{% url "store:category-products" i.slug %}"> <img src="{{i.icon.url}}" alt="" />{{i.title}}</a> {% endcomment %}
+                                            <a href=""> <img src="{{i.icon.url}}" alt="" />{{i.title}}</a>
                                         </li>
                                         {% endfor %}
                                     </ul>
@@ -381,10 +381,10 @@
                                         <a href="{% url "store:index" %}">Home</a>
                                     </li>
                                     <li>
-                                        {% comment %} <a href="{% url "store:products" %}">Shop</a> {% endcomment %}
+                                        <a href="">Shop</a>
                                     </li>
                                     <li>
-                                        {% comment %} <a href="{% url "store:vendors" %}">Vendors</a> {% endcomment %}
+                                        <a href="">Vendors</a>
                                     </li>
                                     <li class="position-static">
                                         <a href="#">Mega menu <i class="fi-rs-angle-down"></i></a>
@@ -994,9 +994,9 @@
     <script src="{% static 'assets/js/plugins/jquery.elevatezoom.js' %}"></script>
     <!-- Template  JS -->
     <script src="{% static 'assets/js/main.js' %}"></script>
-    <script src="{% static 'assets/js/shop.js' %}"></script>
+    <script src="{% static 'backend/shop.js' %}"></script>
     <!-- Custom Backend  JS -->
-    <script src="{% static 'assets/js/function.js' %}"></script>
+    <script src="{% static 'backend/function.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 </body>
 
