@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Count
 from store import models as store_models
 from vendor import models as vendor_models
 
@@ -45,3 +46,23 @@ def product_detail(request, slug):
     return render(request, 'store/product-detail.html', context)
 
 
+def categories(request):
+    categories = store_models.Category.objects.all()
+
+    context = {
+        'categories': categories
+    }
+
+    return render(request, 'store/categories.html', context)
+
+
+def category_products(request, slug):
+    category = store_models.Category.objects.get(slug=slug)
+    products = store_models.Product.objects.filter(status='Published', category=category)
+
+    context = {
+        'category': category,
+        'products': products
+    }
+
+    return render(request, 'store/category-products.html', context)
