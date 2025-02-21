@@ -1,15 +1,14 @@
 from django.shortcuts import render, redirect
-from django.db.models import Count
+from django.db.models import Q, Avg
 from store import models as store_models
 from vendor import models as vendor_models
 
 def index(request):
     products = store_models.Product.objects.filter(status='Published')
-    categories = store_models.Category.objects.all()
 
     context = {
         'products': products,
-        'categories': categories,
+        'new_products': store_models.Product.objects.filter(status='Published', featured=True).order_by('-date')[:4],
     }
 
     return render(request, 'store/index.html', context)
@@ -66,3 +65,25 @@ def category_products(request, slug):
     }
 
     return render(request, 'store/category-products.html', context)
+
+
+def vendors(request):
+    vendors = vendor_models.Vendor.objects.all()
+
+    context = {
+        'vendors': vendors
+    }
+
+    return render(request, 'store/vendors.html', context)
+
+
+def vendor_detail(request, slug):
+    vendor = vendor_models.Vendor.objects.get(slug=slug)
+
+    context = {
+        'vendor': vendor
+    }
+
+    return render(request, 'store/vendor-detail.html', context)
+
+

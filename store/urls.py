@@ -13,4 +13,8 @@ urlpatterns = [
     # Display Categories
     path('categories/', views.categories, name='categories'),
     path('category-products/<slug>/', views.category_products, name='category-products'),
+
+    # Display Vendors
+    path('vendors/', views.vendors, name='vendors'),
+    path('vendor-detail/<slug>/', views.vendor_detail, name='vendor-detail'),
 ]
