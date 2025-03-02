@@ -1,6 +1,6 @@
 # 🛒 Multifunctional Multivendor Online Store
 
-![Project Logo](https://nest-grocery.vercel.app/assets/logo.png)
+![Project Logo](https://themes.pixelstrap.com/fastkart/assets/images/logo/3.png)
 
 A Django-based online store that enables multiple vendors to sell products on a single platform. Designed for a seamless shopping experience, this project includes essential features for both vendors and customers.
 

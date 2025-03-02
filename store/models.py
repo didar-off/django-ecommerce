@@ -87,7 +87,7 @@ class Product(models.Model):
     Represents a product in the online store.
     """
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='product/images', default='default-image.jpg', null=True, blank=True)
+    image = models.ImageField(upload_to='product/images', default='default-image.jpg', help_text='At least 6 images for better experience')
     description = CKEditor5Field('Description', config_name='extends')
     short_inf = CKEditor5Field('Short Information', config_name='extends')
 
