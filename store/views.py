@@ -22,3 +22,13 @@ def product_detail(request, slug):
     }
 
     return render(request, 'store/product-detail.html', context)
+
+
+def products(request):
+    products = store_models.Product.objects.filter(status='Published')
+
+    context = {
+        'products': products
+    }
+
+    return render(request, 'store/products.html', context)
