@@ -199,29 +199,32 @@
 
                                 <div class="product-package">
                                     <div class="product-title">
-                                        <h4>Weight </h4>
+                                        <h4>Color </h4>
                                     </div>
 
-                                    <ul class="rectangle select-package">
+                                    <ul class="color circle select-package">
                                         {% for variant in product.variants.all %}
-                                            {% if variant.name == 'Weight' or variant.name == 'weight'%}
+                                            {% if variant.name == 'Color' or variant.name == 'color'%}
                                                 {% for i in variant.items.all %}
                                                     <li class="form-check">
-                                                        <input class="form-check-input" type="radio" name="weight" id="{{i.description}}">
+                                                        <input class="form-check-input" checked type="radio" name="color"
+                                                            id="{{i.description}}">
                                                         <label class="form-check-label" for="{{i.description}}">
-                                                            <span>{{i.title}}</span>
+                                                            <span style="background-color: {{i.title}};"></span>
                                                         </label>
                                                     </li>
                                                 {% endfor %}
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
+
                                     <div class="product-title">
-                                        <h4>Size </h4>
+                                        <h4>Weight </h4>
                                     </div>
+
                                     <ul class="rectangle select-package">
                                         {% for variant in product.variants.all %}
-                                            {% if variant.name == 'Size' or variant.name == 'size'%}
+                                            {% if variant.name == 'Weight' or variant.name == 'weight'%}
                                                 {% for i in variant.items.all %}
                                                     <li class="form-check">
                                                         <input class="form-check-input" type="radio" name="weight" id="{{i.description}}">
@@ -282,14 +285,14 @@
                                             <button type="button" class="qty-left-minus" data-type="minus" data-field="">
                                                 <i class="fa fa-minus"></i>
                                             </button>
-                                            <input class="form-control input-number qty-input" type="number" name="quantity" value="0" min="0" max="{{product.stock}}">
+                                            <input class="form-control input-number qty-input quantity" type="number" name="quantity" id="quantity" value="0" min="0" max="{{product.stock}}">
                                             <button type="button" class="qty-right-plus" data-type="plus" data-field="">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
                                     </div>
 
-                                    <button onclick="location.href = 'cart.html';" class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
+                                    <a href="#" class="btn p-0 wishlist btn-wishlist notifi-wishlist" data-id="{{product.id}}">Add To Cart</a>
                                 </div>
 
                                 <div class="progress-sec">
