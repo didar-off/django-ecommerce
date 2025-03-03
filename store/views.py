@@ -44,12 +44,6 @@ def add_to_cart(request):
     color = request.GET.get('color')
     cart_id = request.GET.get('cart_id')
 
-    # print('id: ', id)
-    # print('qty: ', qty)
-    # print('weight: ', weight)
-    # print('color: ', color)
-    # print('cart_id: ', cart_id)
-
     request.session['cart_id'] = cart_id
 
     if not id or not qty or not cart_id:

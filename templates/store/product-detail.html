@@ -207,8 +207,7 @@
                                             {% if variant.name == 'Color' or variant.name == 'color'%}
                                                 {% for i in variant.items.all %}
                                                     <li class="form-check">
-                                                        <input class="form-check-input" checked type="radio" name="color"
-                                                            id="{{i.description}}">
+                                                        <input class="form-check-input" type="radio" name="color" id="{{i.description}}" style="background-color: {{i.title}};" value="{{i.title}}" required>
                                                         <label class="form-check-label" for="{{i.description}}">
                                                             <span style="background-color: {{i.title}};"></span>
                                                         </label>
@@ -227,7 +226,7 @@
                                             {% if variant.name == 'Weight' or variant.name == 'weight'%}
                                                 {% for i in variant.items.all %}
                                                     <li class="form-check">
-                                                        <input class="form-check-input" type="radio" name="weight" id="{{i.description}}">
+                                                        <input class="form-check-input" type="radio" name="weight" id="{{i.description}}" value="{{i.title}}" required>
                                                         <label class="form-check-label" for="{{i.description}}">
                                                             <span>{{i.title}}</span>
                                                         </label>
@@ -292,7 +291,7 @@
                                         </div>
                                     </div>
 
-                                    <a href="#" class="btn p-0 wishlist btn-wishlist notifi-wishlist" data-id="{{product.id}}">Add To Cart</a>
+                                    <a href="#" class="btn btn-md bg-dark cart-button text-white w-100 add_to_cart" data-id="{{product.id}}">Add To Cart</a>
                                 </div>
 
                                 <div class="progress-sec">

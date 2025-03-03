@@ -1,7 +1,7 @@
 $(document).ready(function () {
     const Toast = Swal.mixin({
         toast: true,
-        posotio: "top",
+        position: "top",
         showConfirmationButton: false,
         timer: 2000,
         timeProgressBar: true
@@ -29,8 +29,7 @@ $(document).ready(function () {
         const qty = $(".quantity").val()
         const weight = $("input[name='weight']:checked").val()
         const color = $("input[name='color']:checked").val()
-        const cart_id = generateCardId()
-        
+        const cart_id = generateCardId()       
 
         $.ajax({
             url: "/add-to-cart/",
