@@ -279,7 +279,7 @@
                                                 </div>
 
                                                 <div class="button-group">
-                                                    <a href="cart.html" class="btn btn-sm cart-button">View Cart</a>
+                                                    <a href="{% url "store:cart" %}" class="btn btn-sm cart-button">View Cart</a>
                                                     <a href="checkout.html" class="btn btn-sm cart-button theme-bg-color
                                                     text-white">Checkout</a>
                                                 </div>
@@ -1099,7 +1099,7 @@
                                                         <a class="dropdown-item" href="about-us.html">About Us</a>
                                                     </li>
                                                     <li>
-                                                        <a class="dropdown-item" href="cart.html">Cart</a>
+                                                        <a class="dropdown-item" href="{% url "store:cart" %}">Cart</a>
                                                     </li>
                                                     <li>
                                                         <a class="dropdown-item" href="contact-us.html">Contact</a>
@@ -1184,6 +1184,15 @@
                     </div>
                 </div>
             </div>
+
+            {% for message in messages %}
+                {% if message %}
+                    <div class="alert alert-{{message.tag}}">
+                        <strong>{{message}}</strong>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
         </div>
     </header>
     <!-- Header End -->
@@ -1220,7 +1229,7 @@
             </li>
 
             <li>
-                <a href="cart.html">
+                <a href="{% url "store:cart" %}">
                     <i class="iconly-Bag-2 icli fly-cate"></i>
                     <span>Cart</span>
                 </a>

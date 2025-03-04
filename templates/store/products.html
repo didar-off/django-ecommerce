@@ -805,7 +805,7 @@
                     <div class="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
                         {% for i in products %}
                         <div>
-                            <div class="product-box-3 h-100 wow fadeInUp">
+                            <div class="product-box-3 h-100 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="product-header">
                                     <div class="product-image">
                                         <a href="{% url "store:product-detail" i.slug %}">
@@ -835,15 +835,80 @@
                                         </ul>
                                     </div>
                                 </div>
+
                                 <div class="product-footer">
                                     <div class="product-detail">
                                         <span class="span-name">{{i.category}}</span>
                                         <a href="{% url "store:product-detail" i.slug %}">
                                             <h5 class="name">{{i.name}}</h5>
                                         </a>
-                                        <p class="text-content mt-1 mb-2 product-content">{{i.short_inf}}</p>
                                         <div class="product-rating mt-2">
                                             <ul class="rating">
+                                                {% if not i.average_rating %}
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif i.average_rating > 0 and i.average_rating < 2 %}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif i.average_rating > 1 and i.average_rating < 3 %}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif i.average_rating > 2 and i.average_rating < 4 %}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif i.average_rating > 3 and i.average_rating < 5 %}
                                                 <li>
                                                     <i data-feather="star" class="fill"></i>
                                                 </li>
@@ -859,33 +924,34 @@
                                                 <li>
                                                     <i data-feather="star"></i>
                                                 </li>
+                                                {% elif i.average_rating > 4%}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                {% endif %}
                                             </ul>
-                                            <span>(4.0)</span>
+                                            <span>({{i.average_rating}})</span>
                                         </div>
-                                        <h6 class="unit">250 ml</h6>
+                                        {% for variant in i.variants.all %}
+                                            {% if variant.name == 'Weight' or variant.name == 'weight'%}
+                                                    <h6 class="unit">Weight: {% for i in variant.items.all %}{{i.title}}&nbsp;&nbsp;{% endfor %}</h6>
+                                            {% endif %}
+                                        {% endfor %}
                                         <h5 class="price"><span class="theme-color">${{i.price}}</span> <del>${{i.regular_price}}</del>
                                         </h5>
-                                        <div class="add-to-cart-box bg-white">
-                                            <button class="btn btn-add-cart addcart-button">Add
-                                                <span class="add-icon bg-light-gray">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </span>
-                                            </button>
-                                            <div class="cart_qty qty-box">
-                                                <div class="input-group bg-white">
-                                                    <button type="button" class="qty-left-minus bg-gray"
-                                                        data-type="minus" data-field="">
-                                                        <i class="fa fa-minus"></i>
-                                                    </button>
-                                                    <input class="form-control input-number qty-input" type="text"
-                                                        name="quantity" value="0">
-                                                    <button type="button" class="qty-right-plus bg-gray"
-                                                        data-type="plus" data-field="">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>

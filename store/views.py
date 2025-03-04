@@ -1,8 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from store import models as store_models
+
 from decimal import Decimal
 from django.db.models import Q, Avg, Sum
+from django.contrib import messages
+
+from store import models as store_models
+from customer import models as customer_models
 
 
 def index(request):
@@ -96,4 +100,58 @@ def add_to_cart(request):
         'total_cart_items': total_cart_items.count(),
         'cart_sub_total': '{:,.2f}'.format(cart_sub_total),
         'item_sub_total': '{:,.2f}'.format(existing_cart_items.sub_total) if existing_cart_items else '{:,.2f}'.format(cart.sub_total),
+    })
+
+
+def cart(request):
+    
+    if 'cart_id' in request.session:
+        cart_id = request.session['cart_id']
+    else:
+        cart_id = None
+
+    items = store_models.Cart.objects.filter(Q(cart_id=cart_id) | Q(user=request.user) if request.user.is_authenticated else Q(cart_id=cart_id))
+    cart_sub_total = store_models.Cart.objects.filter(Q(cart_id=cart_id) | Q(user=request.user) if request.user.is_authenticated else Q(cart_id=cart_id)).aggregate(sub_total = Sum('sub_total'))['sub_total']
+
+    try:
+        addresses = customer_models.Address.objects.filter(user=request.user)
+    except:
+        addresses = None
+
+    if not items:
+        messages.warning(request, 'No items in cart')
+        return redirect('store:index')
+    
+    context = {
+        'items': items,
+        'cart_sub_total': cart_sub_total,
+        'addresses': addresses
+    }
+
+    return render(request, 'store/cart.html', context)
+
+
+def delete_cart_item(request):
+    id = request.GET.get('id')
+    item_id = request.GET.get('item_id')
+    cart_id = request.GET.get('cart_id')
+
+    if not id or not item_id or not cart_id:
+        return JsonResponse({'error': 'Item or Product Id not found'}, status=400)
+    
+    try:
+        product = store_models.Product.objects.get(status='Published', id=id)
+    except store_models.Product.DoesNotExist:
+        return JsonResponse({'error': 'Product not found'}, status=404)
+    
+    item = store_models.Cart.objects.get(product=product, id=item_id)
+    item.delete()
+
+    total_cart_items = store_models.Cart.objects.filter(Q(cart_id=cart_id) | Q(user=request.user))
+    cart_sub_total = store_models.Cart.objects.filter(Q(cart_id=cart_id) | Q(user=request.user)).aggregate(sub_total = Sum('sub_total'))['sub_total']
+
+    return JsonResponse({
+        'message': 'Item Deleted',
+        'total_cart_items' : total_cart_items.count(),
+        'cart_sub_total': '{:,.2f}'.format(cart_sub_total) if cart_sub_total else 0.00
     })
