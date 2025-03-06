@@ -81,8 +81,10 @@ def add_to_cart(request):
         existing_cart_items.product = product
         existing_cart_items.qty = qty
         existing_cart_items.price = product.price
-        existing_cart_items.weight = weight
-        existing_cart_items.color = color
+        if weight:
+            existing_cart_items.weight = weight
+        if color:
+            existing_cart_items.color = color
         existing_cart_items.sub_total = Decimal(product.price) * Decimal(qty)
         existing_cart_items.shipping = Decimal(product.shipping)
         existing_cart_items.total = existing_cart_items.sub_total + existing_cart_items.shipping
@@ -148,7 +150,7 @@ def delete_cart_item(request):
     item.delete()
 
     total_cart_items = store_models.Cart.objects.filter(Q(cart_id=cart_id) | Q(user=request.user))
-    cart_sub_total = store_models.Cart.objects.filter(Q(cart_id=cart_id) | Q(user=request.user)).aggregate(sub_total = Sum('sub_total'))['sub_total']
+    cart_sub_total = store_models.Cart.objects.filter(Q(cart_id=cart_id) | Q(user=request.user) if request.user.is_authenticated else Q(cart_id=cart_id)).aggregate(sub_total = Sum('sub_total'))['sub_total']
 
     return JsonResponse({
         'message': 'Item Deleted',

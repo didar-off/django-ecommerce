@@ -205,7 +205,7 @@ class Cart(models.Model):
 
     weight = models.CharField(max_length=100, null=True, blank=True)
     color = models.CharField(max_length=100, null=True, blank=True)
-    cart_id = models.CharField(max_length=100, null=True, blank=True)
+    cart_id = models.CharField(max_length=100)
 
     date = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
@@ -246,7 +246,7 @@ class Order(models.Model):
     initial_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, help_text='The original total before discounts')
     saved = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, null=True, blank=True, help_text='Amount saved with coupon')
 
-    # address = models.ForeignKey('customer.Address', on_delete=models.SET_NULL, null=True)
+    address = models.ForeignKey('customer.Address', on_delete=models.SET_NULL, null=True)
     coupons = models.ManyToManyField(Coupon, blank=True)
 
     order_id = ShortUUIDField(max_length=10, length=5, alphabet='1234567890')
@@ -280,8 +280,8 @@ class OrderItem(models.Model):
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     qty = models.PositiveSmallIntegerField(default=0)
-    # color = models.CharField(max_length=100, null=True, blank=True)
-    # weight = models.CharField(max_length=100, null=True, blank=True)
+    color = models.CharField(max_length=100)
+    weight = models.CharField(max_length=100)
 
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     sub_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
