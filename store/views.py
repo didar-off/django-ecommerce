@@ -156,3 +156,18 @@ def delete_cart_item(request):
         'total_cart_items': total_cart_items,
         'cart_sub_total': '{:,.2f}'.format(cart_sub_total) if cart_sub_total else "0.00"
     })
+
+
+def search(request):
+    query = request.GET.get('query', '').strip()
+    products = store_models.Product.objects.none()
+
+    if query:
+        products = store_models.Product.objects.filter(name__icontains=query, status='Published').order_by('-date')
+
+    context = {
+        'products': products,
+        'query': query
+    }
+
+    return render(request, 'store/search.html', context)

@@ -166,24 +166,26 @@
                             <div class="middle-box">
                                 <div class="location-box">
                                     <button class="btn location-button" data-bs-toggle="modal"
-                                        data-bs-target="#locationModal">
-                                        <span class="location-arrow">
-                                            <i data-feather="map-pin"></i>
-                                        </span>
-                                        <span class="locat-name">Your Location</span>
-                                        <i class="fa-solid fa-angle-down"></i>
-                                    </button>
-                                </div>
-
-                                <div class="search-box">
-                                    <div class="input-group">
-                                        <input type="search" class="form-control" placeholder="I'm searching for...">
-                                        <button class="btn" type="button" id="button-addon2">
-                                            <i data-feather="search"></i>
-                                        </button>
+                                    data-bs-target="#locationModal">
+                                    <span class="location-arrow">
+                                        <i data-feather="map-pin"></i>
+                                    </span>
+                                    <span class="locat-name">Your Location</span>
+                                    <i class="fa-solid fa-angle-down"></i>
+                                </button>
+                            </div>
+                            
+                            <form action="{% url "store:search" %}" method="get">
+                                    <div class="search-box">
+                                        <div class="input-group">
+                                            <input type="search" class="form-control" placeholder="I'm searching for..." name="query">
+                                            <button class="btn" type="submit" id="button-addon2">
+                                                <i data-feather="search"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
 
                             <div class="rightside-box">
                                 <div class="search-full">
@@ -772,30 +774,7 @@
 
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <a class="dropdown-item" href="shop-category-slider.html">Shop
-                                                            Category Slider</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="shop-category.html">Shop
-                                                            Category Sidebar</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="shop-banner.html">Shop Banner</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="shop-left-sidebar.html">Shop Left
-                                                            Sidebar</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="shop-list.html">Shop List</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="shop-right-sidebar.html">Shop
-                                                            Right Sidebar</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item" href="shop-top-filter.html">Shop Top
-                                                            Filter</a>
+                                                        <a class="dropdown-item" href="{% url "store:products" %}">Product List</a>
                                                     </li>
                                                 </ul>
                                             </li>

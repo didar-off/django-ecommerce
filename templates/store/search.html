@@ -1,0 +1,231 @@
+{% extends "partials/base.html" %}
+{% block content %}
+{% load static %}
+
+
+    <!-- Breadcrumb Section Start -->
+    <section class="breadcrumb-section pt-0">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-contain">
+                        {% if query %}
+                        <h2>We found {{products.count}} item{{products.count|pluralize}} for You</h2>
+                        {% else %}
+                        <h2>No searched item</h2>
+                        {% endif %}
+                        <nav>
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="{% url "store:index" %}">
+                                        <i class="fa-solid fa-house"></i>
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active">Search</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Search Bar Section Start -->
+    <section class="search-section">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <form action="{% url "store:search" %}" method="get">
+                    <div class="col-xxl-6 col-xl-8 mx-auto">
+                        <div class="title d-block text-center">
+                            <h2>Search for products</h2>
+                            <span class="title-leaf">
+                                <svg class="icon-width">
+                                    <use xlink:href="{% static "assets/svg/leaf.svg#leaf" %} "></use>
+                                </svg>
+                            </span>
+                        </div>
+
+                        <div class="search-box">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="" name="query">
+                                <button class="btn theme-bg-color text-white m-0" type="submit"
+                                    id="button-addon1">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Search Bar Section End -->
+
+    <!-- Product Section Start -->
+    <section class="section-b-space">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="search-product product-wrapper">
+                        {% for i in products %}
+                        <div>
+                            <div class="product-box-3 h-100 wow fadeInUp" data-wow-delay="0.1s">
+                                <div class="product-header">
+                                    <div class="product-image">
+                                        <a href="{% url "store:product-detail" i.slug %}">
+                                            <img src="{{i.image.url}}"
+                                                class="img-fluid blur-up lazyload" alt="">
+                                        </a>
+
+                                        <ul class="product-option">
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
+                                                <a href="{% url "store:product-detail" i.slug %}" data-bs-toggle="modal"
+                                                    data-bs-target="#view">
+                                                    <i data-feather="eye"></i>
+                                                </a>
+                                            </li>
+
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
+                                                <a href="compare.html">
+                                                    <i data-feather="refresh-cw"></i>
+                                                </a>
+                                            </li>
+
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Wishlist">
+                                                <a href="wishlist.html" class="notifi-wishlist">
+                                                    <i data-feather="heart"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="product-footer">
+                                    <div class="product-detail">
+                                        <span class="span-name">{{i.category}}</span>
+                                        <a href="{% url "store:product-detail" i.slug %}">
+                                            <h5 class="name">{{i.name}}</h5>
+                                        </a>
+                                        <div class="product-rating mt-2">
+                                            <ul class="rating">
+                                                {% if not i.average_rating %}
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif i.average_rating > 0 and i.average_rating < 2 %}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif i.average_rating > 1 and i.average_rating < 3 %}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif i.average_rating > 2 and i.average_rating < 4 %}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif i.average_rating > 3 and i.average_rating < 5 %}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif i.average_rating > 4%}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                {% endif %}
+                                            </ul>
+                                            <span>({{i.average_rating}})</span>
+                                        </div>
+                                        {% for variant in i.variants.all %}
+                                            {% if variant.name == 'Weight' or variant.name == 'weight'%}
+                                                    <h6 class="unit">Weight: {% for i in variant.items.all %}{{i.title}}&nbsp;&nbsp;{% endfor %}</h6>
+                                            {% endif %}
+                                        {% endfor %}
+                                        <h5 class="price"><span class="theme-color">${{i.price}}</span> <del>${{i.regular_price}}</del>
+                                        </h5>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+
+{% endblock content %}
