@@ -146,14 +146,13 @@ def delete_cart_item(request):
     except store_models.Product.DoesNotExist:
         return JsonResponse({'error': 'Product not found'}, status=404)
     
-    item = store_models.Cart.objects.get(product=product, id=item_id)
-    item.delete()
+    store_models.Cart.objects.filter(product=product, id=item_id).delete()
 
-    total_cart_items = store_models.Cart.objects.filter(Q(cart_id=cart_id) | Q(user=request.user))
-    cart_sub_total = store_models.Cart.objects.filter(Q(cart_id=cart_id) | Q(user=request.user) if request.user.is_authenticated else Q(cart_id=cart_id)).aggregate(sub_total = Sum('sub_total'))['sub_total']
+    total_cart_items = store_models.Cart.objects.filter(Q(cart_id=cart_id) | Q(user=request.user)).count()
+    cart_sub_total = store_models.Cart.objects.filter(Q(cart_id=cart_id) | Q(user=request.user)).aggregate(sub_total=Sum('sub_total'))['sub_total']
 
     return JsonResponse({
         'message': 'Item Deleted',
-        'total_cart_items' : total_cart_items.count(),
-        'cart_sub_total': '{:,.2f}'.format(cart_sub_total) if cart_sub_total else 0.00
+        'total_cart_items': total_cart_items,
+        'cart_sub_total': '{:,.2f}'.format(cart_sub_total) if cart_sub_total else "0.00"
     })

@@ -131,6 +131,9 @@ class Product(models.Model):
         avg = Review.objects.filter(product=self).aggregate(avg_rating=models.Avg('rating'))['avg_rating']
         return avg if avg is not None else 0
     
+    def saved(self):
+        return self.regular_price - self.price
+    
     def reviews(self):
         return Review.objects.filter(product=self, active=True)
     

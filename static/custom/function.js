@@ -85,67 +85,53 @@ $(document).ready(function () {
         const update_type = button_el.attr("data-update_type");
         const item_id = button_el.attr("data-item_id");
         const product_id = button_el.attr("data-product_id");
-        var qty = $(".item-qty-" + item_id).val();
+        let qty_input = $(".item-qty-" + item_id);
+        let current_qty = parseInt(qty_input.val(), 10);
         const cart_id = generateCardId();
-
-        if (update_type === "increase") {
-            $(".item-qty-" + item_id).val(parseInt(qty) + 1);
-            qty++;
-        } else {
-            if (parseInt(qty) <= 1) {
-                $(".item-qty-" + item_id).val(1);
-                qty = 1;
-            } else {
-                $(".item-qty-" + item_id).val(parseInt(qty) - 1);
-                qty--;
-            }
-        }
-
-        // Send AJAX-request to server
+    
+        let new_qty = update_type === "increase" ? current_qty + 1 : Math.max(1, current_qty - 1);
+    
+        // Добавление классов к кнопкам
+        button_el.addClass("btn btn-primary");
+    
         $.ajax({
             url: "/add-to-cart/",
             data: {
                 id: product_id,
-                qty: qty,
+                qty: new_qty,
                 cart_id: cart_id,
             },
             beforeSend: function () {
-                button_el.html("<i class='fas fa-spinner fa-spin ms-2'></i>");
+                button_el.html("<i class='fas fa-spinner fa-spin'></i>");
             },
             success: function (response) {
-                console.log("Success:", response);
-                Toast.fire({
-                    icon: "success",
-                    title: response?.message || "Product added to cart!"
-                });
-
-                if (update_type === "increase") {
-                    button_el.html("+");
-                } else {
-                    button_el.html("-");
-                }
-
+                qty_input.val(new_qty);
                 $(".item_sub_total_" + item_id).text(response.item_sub_total);
                 $(".cart_sub_total").text(response.cart_sub_total);
+    
+                // Восстанавливаем кнопки после успешного ответа
+                button_el.html(update_type === "increase" ? "<i class='fas fa-plus'></i>" : "<i class='fas fa-minus'></i>");
+                
+                Toast.fire({
+                    icon: "success",
+                    title: response.message || "Quantity updated successfully!"
+                });
             },
             error: function (xhr) {
-                console.error("Error:", xhr.responseText);
-                let errorResponse = JSON.parse(xhr.responseText);
+                const errorResponse = JSON.parse(xhr.responseText);
                 Toast.fire({
                     icon: "error",
                     title: errorResponse?.error || "Something went wrong."
                 });
-
-                if (update_type == "increase") {
-                    button_el.html("+");
-                } else {
-                    button_el.html("-");
-                }
+    
+                qty_input.val(current_qty);
+                button_el.html(update_type === "increase" ? "<i class='fas fa-plus'></i>" : "<i class='fas fa-minus'></i>");
             }
         });
     });
 
-
+    
+    // Delete cart item
     $(document).on("click", ".delete_cart_item", function(){
         const button_el = $(this);
         const item_id = button_el.attr("data-item_id");

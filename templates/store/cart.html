@@ -51,16 +51,13 @@
                                                             <a href="product-left-thumbnail.html">{{i.product.name}}</a>
                                                         </li>
 
-                                                        <li class="text-content"><span class="text-title">Sold
-                                                                By:</span> {{i.product.vendor.store_name}}
+
+                                                        <li class="text-content"><span
+                                                                class="text-title">Weight: &nbsp;</span>{{i.weight}}
                                                         </li>
 
                                                         <li class="text-content"><span
-                                                                class="text-title">Weight</span> - {{i.product.weight}}
-                                                        </li>
-
-                                                        <li class="text-content"><span
-                                                                class="text-title">Color</span> - {{i.product.color}}
+                                                                class="text-title">Color: &nbsp;</span>{{i.color}}
                                                         </li>
 
                                                         <li class="quantity-price-box">
@@ -91,19 +88,19 @@
                                         <td class="price">
                                             <h4 class="table-title text-content">Item Price</h4>
                                             <h5>${{i.product.price|intcomma}} <del class="text-content">${{i.product.regular_price|intcomma}}</del></h5>
-                                            <h6 class="theme-color">You Save : $20.68</h6>
+                                            <h6 class="theme-color">You Save : ${{i.product.saved}}</h6>
                                         </td>
 
                                         <td class="quantity">
                                             <div class="cart_qty qty-box product-qty">
                                                 <div class="input-group">
-                                                    <button type="button" class="update_cart_qty" data-update_type="decrease" data-item_id="{{i.id}}" data-product_id="{{i.product.id}}" data-type="minus" data-field="">
-                                                        <i class="fa fa-minus"></i>
+                                                    <button type="button" class="btn btn-primary update_cart_qty" data-update_type="decrease" data-item_id="{{i.id}}" data-product_id="{{i.product.id}}">
+                                                        <i class="fas fa-minus"></i>
                                                     </button>
                                                     <input class="form-control input-number qty-input item-qty-{{i.id}}" type="number" name="quantity" id="quantity" value="{{i.qty}}" min="1" max="{{i.product.stock}}" data-update_type="update" data-item_id="{{i.id}}" data-product_id="{{i.product.id}}" required>
-                                                    <button type="button" class="update_cart_qty" data-update_type="increase" data-item_id="{{i.id}}" data-product_id="{{i.product.id}}" data-type="plus" data-field="">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
+                                                    <button type="button" class="btn btn-primary update_cart_qty" data-update_type="increase" data-item_id="{{i.id}}" data-product_id="{{i.product.id}}">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>                                                    
                                                 </div>
                                             </div>
                                         </td>
@@ -115,7 +112,7 @@
 
                                         <td class="save-remove">
                                             <h4 class="table-title text-content">Action</h4>
-                                            <a href="#" class="delete_cart_item" data-item_id="{{i.id}}" data-product_id="{{i.product.id}}" href="#">Remove</a>
+                                            <a href="#" class="delete_cart_item" data-item_id="{{i.id}}" data-product_id="{{i.product.id}}">Remove</a>
                                         </td>
                                     </tr>
                                     {% endfor %}

@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -233,49 +234,28 @@
 
                                             <div class="onhover-div">
                                                 <ul class="cart-list">
+                                                    {% for i in items %}
                                                     <li class="product-box-contain">
                                                         <div class="drop-cart">
-                                                            <a href="product-left-thumbnail.html" class="drop-image">
-                                                                <img src="{% static "assets/images/vegetable/product/1.png" %}"
+                                                            <a href="{% url "store:cart" %}" class="drop-image">
+                                                                <img src="{{i.product.image.url}}"
                                                                     class="blur-up lazyload" alt="">
                                                             </a>
 
                                                             <div class="drop-contain">
-                                                                <a href="product-left-thumbnail.html">
-                                                                    <h5>Fantasy Crunchy Choco Chip Cookies</h5>
+                                                                <a href="{% url "store:cart" %}">
+                                                                    <h5>{{i.product.name}}</h5>
                                                                 </a>
-                                                                <h6><span>1 x</span> $80.58</h6>
-                                                                <button class="close-button close_button">
-                                                                    <i class="fa-solid fa-xmark"></i>
-                                                                </button>
+                                                                <h6><span>{{i.qty}} x</span> $<span class="item_sub_total_{{i.id}}">{{i.product.price|intcomma}}</span></h6>
                                                             </div>
                                                         </div>
                                                     </li>
-
-                                                    <li class="product-box-contain">
-                                                        <div class="drop-cart">
-                                                            <a href="product-left-thumbnail.html" class="drop-image">
-                                                                <img src="{% static "assets/images/vegetable/product/2.png" %}"
-                                                                    class="blur-up lazyload" alt="">
-                                                            </a>
-
-                                                            <div class="drop-contain">
-                                                                <a href="product-left-thumbnail.html">
-                                                                    <h5>Peanut Butter Bite Premium Butter Cookies 600 g
-                                                                    </h5>
-                                                                </a>
-                                                                <h6><span>1 x</span> $25.68</h6>
-                                                                <button class="close-button close_button">
-                                                                    <i class="fa-solid fa-xmark"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </li>
+                                                    {% endfor %}
                                                 </ul>
 
                                                 <div class="price-box">
                                                     <h5>Total :</h5>
-                                                    <h4 class="theme-color fw-bold">$106.58</h4>
+                                                    <h4 class="theme-color fw-bold">$<spann class="cart_sub_total">{{cart_sub_total|intcomma}}</span></h4>
                                                 </div>
 
                                                 <div class="button-group">
