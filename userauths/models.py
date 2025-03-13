@@ -10,7 +10,7 @@ USER_TYPE = (
 
 
 def user_directory_path(instance, filename):
-    ext = filename.spli('.')[-1]
+    ext = filename.split('.')[-1]
     filename = '%s.%s' % (instance.user.username, filename)
     return 'user_{0}/{1}'.format(instance.user.username, filename)
 
