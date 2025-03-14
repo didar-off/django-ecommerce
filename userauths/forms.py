@@ -29,7 +29,7 @@ class UserRegisterForm(UserCreationForm):
 
 class LoginForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control rounded', 'placeholder': 'Email'}), required=True)
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control rounded', 'placeholder': 'Password'}), required=True)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control rounded', 'placeholder': 'Password'}), required=True)
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox)
 
     class Meta:

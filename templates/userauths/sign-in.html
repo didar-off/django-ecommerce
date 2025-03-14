@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="breadcrumb-contain">
-                        <h2>Sign In</h2>
+                        <h2 class="mb-2">Log In</h2>
                         <nav>
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item">
@@ -17,7 +17,7 @@
                                         <i class="fa-solid fa-house"></i>
                                     </a>
                                 </li>
-                                <li class="breadcrumb-item active">Sign In</li>
+                                <li class="breadcrumb-item active">Log In</li>
                             </ol>
                         </nav>
                     </div>
@@ -28,12 +28,12 @@
     <!-- Breadcrumb Section End -->
 
     <!-- log in section start -->
-    <section class="log-in-section section-b-space">
+    <section class="log-in-section background-image-2 section-b-space">
         <div class="container-fluid-lg w-100">
             <div class="row">
                 <div class="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
                     <div class="image-contain">
-                        <img src="{% static 'assets/images/inner-page/sign-up.png' %}" class="img-fluid" alt="">
+                        <img src="{% static 'assets/images/inner-page/log-in.png' %}" class="img-fluid" alt="">
                     </div>
                 </div>
 
@@ -41,50 +41,23 @@
                     <div class="log-in-box">
                         <div class="log-in-title">
                             <h3>Welcome To Fastkart</h3>
-                            <h4>Create New Account</h4>
+                            <h4>Log In Your Account</h4>
                         </div>
 
                         <div class="input-box">
                             <form class="row g-4" method="POST">
                                 {% csrf_token %}
                                 <div class="col-12">
-                                    <div class="form-floating theme-form-floating">
-                                        {{form.full_name}}
-                                        <label for="fullname">Full Name</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating theme-form-floating">
+                                    <div class="form-floating theme-form-floating log-in-form">
                                         {{form.email}}
                                         <label for="email">Email Address</label>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
-                                    <div class="form-floating theme-form-floating">
-                                        {{form.password1}}
+                                    <div class="form-floating theme-form-floating log-in-form">
+                                        {{form.password}}
                                         <label for="password">Password</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="form-floating theme-form-floating">
-                                        {{form.password2}}
-                                        <label for="password">Confirm Password</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="form-floating theme-form-floating">
-                                        {{form.mobile}}
-                                        <label for="password">Confirm Password</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="form-floating theme-form-floating">
-                                        {{form.user_type}}
-                                        <label for="password">Confirm Password</label>
                                     </div>
                                 </div>
 
@@ -94,14 +67,15 @@
                                             <input class="checkbox_animated check-box" type="checkbox"
                                                 id="flexCheckDefault" required>
                                             {{form.captcha}}
-                                            <label class="form-check-label" for="flexCheckDefault">I agree with
-                                                <span>Terms</span> and <span>Privacy</span></label>
+                                            <label class="form-check-label" for="flexCheckDefault">Remember me</label>
                                         </div>
+                                        <a href="forgot.html" class="forgot-password">Forgot Password?</a>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
-                                    <button class="btn btn-animation w-100" type="submit">Sign Up</button>
+                                    <button class="btn btn-animation w-100 justify-content-center" type="submit">Log
+                                        In</button>
                                 </div>
                             </form>
                         </div>
@@ -113,17 +87,15 @@
                         <div class="log-in-button">
                             <ul>
                                 <li>
-                                    <a href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&flowEntry=ServiceLogin"
-                                        class="btn google-button w-100">
+                                    <a href="https://www.google.com/" class="btn google-button w-100">
                                         <img src="{% static 'assets/images/inner-page/google.png' %}" class="blur-up lazyload"
-                                            alt="">
-                                        Sign up with Google
+                                            alt=""> Log In with Google
                                     </a>
                                 </li>
                                 <li>
                                     <a href="https://www.facebook.com/" class="btn google-button w-100">
                                         <img src="{% static 'assets/images/inner-page/facebook.png' %}" class="blur-up lazyload"
-                                            alt=""> Sign up with Facebook
+                                            alt=""> Log In with Facebook
                                     </a>
                                 </li>
                             </ul>
@@ -134,13 +106,11 @@
                         </div>
 
                         <div class="sign-up-box">
-                            <h4>Already have an account?</h4>
-                            <a href="login.html">Log In</a>
+                            <h4>Don't have an account?</h4>
+                            <a href="sign-up.html">Sign Up</a>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-xxl-7 col-xl-6 col-lg-6"></div>
             </div>
         </div>
     </section>
