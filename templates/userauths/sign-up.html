@@ -104,6 +104,29 @@
                                     <button class="btn btn-animation w-100" type="submit">Sign Up</button>
                                 </div>
                             </form>
+
+                            <script>
+                                document.getElementById("registerForm").addEventListener("submit", function(e) {
+                                    e.preventDefault();
+                                
+                                    let formData = new FormData(this);
+                                
+                                    fetch("{% url 'userauths:sign-up' %}", {
+                                        method: "POST",
+                                        body: formData,
+                                        headers: {
+                                            "X-Requested-With": "XMLHttpRequest",
+                                        }
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        showToast(data.status, data.message, data.redirect);
+                                    })
+                                    .catch(error => {
+                                        showToast("error", "Something went wrong.");
+                                    });
+                                });
+                                </script>
                         </div>
 
                         <div class="other-log-in">

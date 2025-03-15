@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
@@ -9,9 +10,8 @@ from vendor import models as vendor_models
 
 def register_view(request):
     if request.user.is_authenticated:
-        messages.warning(request, 'You are already logged in. Logout if you want to create a new account.')
-        return redirect('store:index')
-    
+        return JsonResponse({'status': 'warning', 'message': 'You are already logged in. Logout if you want to create a new account.'})
+
     form = userauths_forms.UserRegisterForm(request.POST or None)
 
     if form.is_valid():
@@ -26,11 +26,9 @@ def register_view(request):
 
             user = authenticate(email=email, password=password)
             if user is None:
-                messages.error(request, 'Authentication failed. Please try logging in manually.')
-                return redirect('userauths:login')
+                return JsonResponse({'status': 'error', 'message': 'Authentication failed. Please try logging in manually.'})
 
             login(request, user)
-            messages.success(request, 'Account created successfully and logged in.')
 
             profile = userauths_models.Profile.objects.create(full_name=full_name, mobile=mobile, user=user)
 
@@ -42,59 +40,50 @@ def register_view(request):
 
             profile.save()
 
-            next_url = request.GET.get('next', 'store:index')
-            return redirect(next_url)
+            return JsonResponse({'status': 'success', 'message': 'Account created successfully and logged in.', 'redirect': 'store:index'})
 
         except Exception as e:
-            messages.error(request, f'An unexpected error occurred: {e}')
+            return JsonResponse({'status': 'error', 'message': f'An unexpected error occurred: {e}'})
     else:
-        for field, errors in form.errors.items():
-            for error in errors:
-                messages.error(request, f"{field.capitalize()}: {error}")
+        errors = []
+        for field, error_list in form.errors.items():
+            for error in error_list:
+                errors.append(f"{field.capitalize()}: {error}")
 
-    context = {
-        'form': form
-    }
+        return JsonResponse({'status': 'error', 'message': " ".join(errors)})
 
-    return render(request, 'userauths/sign-up.html', context)
+    return render(request, 'userauths/sign-up.html', {'form': form})
 
 
 def login_view(request):
     if request.user.is_authenticated:
-        messages.warning(request, 'You are already logged in')
-        return redirect('store:index')
-    
+        return JsonResponse({'status': 'warning', 'message': 'You are already logged in'})
+
     if request.method == 'POST':
         form = userauths_forms.LoginForm(request.POST or None)
 
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            captcha_verified = form.cleaned_data.get('captcha', False)
 
-            if captcha_verified:
-                try:
-                    user_instance = userauths_models.User.objects.get(email=email, is_active=True)
-                    user_authenticate = authenticate(request, email=email, password=password)
+            user = authenticate(request, email=email, password=password)
 
-                    if user_instance is not None:
-                        login(request, user_authenticate)
-                        messages.success(request, 'You are logged in')
-
-                        next_url = request.GET.get('next', 'store:index')
-                        return redirect(next_url)
-                    else:
-                        messages.error(request, 'Username or Password does not exist')
-                except:
-                    messages.error(request, 'Username or Password does not exist')
+            if user is not None:
+                login(request, user)
+                return JsonResponse({'status': 'success', 'message': 'You are logged in', 'redirect': '/'})
             else:
-                messages.error(request, 'Captcha verification failed please try again')
-    
+                return JsonResponse({'status': 'error', 'message': 'Invalid email or password'})
+
+    return JsonResponse({'status': 'error', 'message': 'Something went wrong'})
+
+
+def logout_view(request):
+    if 'cart_id' in request.session:
+        cart_id = request.session['cart_id']
     else:
-        form = userauths_forms.LoginForm()
+        cart_id = None
 
-    context = {
-        'form': form
-    }
+    logout(request)
+    request.session['cart_id'] = cart_id
 
-    return render(request, 'userauths/sign-in.html', context)
+    return JsonResponse({'status': 'success', 'message': 'You have been logged out', 'redirect': 'store:index'})

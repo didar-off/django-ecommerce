@@ -38,6 +38,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 
+
+<script>
+    function showToast(type, message, redirectUrl = null) {
+        Toast.fire({
+            icon: type,
+            title: message,
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    
+        if (redirectUrl) {
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, 2000);
+        }
+    }
+
+    {% if messages %}
+        {% for message in message %}
+            showToast("{{message.tags}}", "{{message}}")
+        {% endfor %}
+    {% endif %}
+</script>
+
+
 <body class="bg-effect">
 
     <!-- Loader Start -->
@@ -274,25 +301,45 @@
                                                 <i data-feather="user"></i>
                                             </div>
                                             <div class="delivery-detail">
-                                                <h6>Hello,</h6>
+                                                <h6>Hello, {{request.user.profile.full_name}}</h6>
                                                 <h5>My Account</h5>
                                             </div>
                                         </div>
 
                                         <div class="onhover-div onhover-div-login">
                                             <ul class="user-box-name">
-                                                <li class="product-box-contain">
-                                                    <i></i>
-                                                    <a href="login.html">Log In</a>
-                                                </li>
+
+                                                {% if request.user.is_authenticated %}
 
                                                 <li class="product-box-contain">
-                                                    <a href="sign-up.html">Register</a>
+                                                    <a href="profile.html">View Profile</a>
                                                 </li>
 
                                                 <li class="product-box-contain">
                                                     <a href="forgot.html">Forgot Password</a>
                                                 </li>
+
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href="{% url "userauths:sign-out" %}">Log Out</a>
+                                                </li>
+
+                                                {% else %}
+
+                                                <li class="product-box-contain">
+                                                    <i></i>
+                                                    <a href="{% url "userauths:sign-in" %}">Log In</a>
+                                                </li>
+
+                                                <li class="product-box-contain">
+                                                    <a href="{% url "userauths:sign-up" %}">Register</a>
+                                                </li>
+
+                                                <li class="product-box-contain">
+                                                    <a href="forgot.html">Forgot Password</a>
+                                                </li>
+
+                                                {% endif %}
                                             </ul>
                                         </div>
                                     </li>
@@ -1143,15 +1190,6 @@
                     </div>
                 </div>
             </div>
-
-            {% for message in messages %}
-                {% if message %}
-                    <div class="alert alert-{{message.tag}}">
-                        <strong>{{message}}</strong>
-                    </div>
-                {% endif %}
-            {% endfor %}
-
         </div>
     </header>
     <!-- Header End -->
