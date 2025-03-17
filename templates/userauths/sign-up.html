@@ -53,10 +53,18 @@
                                         <label for="fullname">Full Name</label>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
                                         {{form.email}}
                                         <label for="email">Email Address</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-floating theme-form-floating">
+                                        {{form.mobile}}
+                                        <label for="mobile">Mobile Number</label>
                                     </div>
                                 </div>
 
@@ -76,15 +84,8 @@
 
                                 <div class="col-12">
                                     <div class="form-floating theme-form-floating">
-                                        {{form.mobile}}
-                                        <label for="password">Confirm Password</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="form-floating theme-form-floating">
                                         {{form.user_type}}
-                                        <label for="password">Confirm Password</label>
+                                        <label for="user_type">User Type</label>
                                     </div>
                                 </div>
 
@@ -92,7 +93,7 @@
                                     <div class="forgot-box">
                                         <div class="form-check ps-0 m-0 remember-box">
                                             <input class="checkbox_animated check-box" type="checkbox"
-                                                id="flexCheckDefault" required>
+                                                id="flexCheckDefault">
                                             {{form.captcha}}
                                             <label class="form-check-label" for="flexCheckDefault">I agree with
                                                 <span>Terms</span> and <span>Privacy</span></label>
@@ -104,29 +105,6 @@
                                     <button class="btn btn-animation w-100" type="submit">Sign Up</button>
                                 </div>
                             </form>
-
-                            <script>
-                                document.getElementById("registerForm").addEventListener("submit", function(e) {
-                                    e.preventDefault();
-                                
-                                    let formData = new FormData(this);
-                                
-                                    fetch("{% url 'userauths:sign-up' %}", {
-                                        method: "POST",
-                                        body: formData,
-                                        headers: {
-                                            "X-Requested-With": "XMLHttpRequest",
-                                        }
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        showToast(data.status, data.message, data.redirect);
-                                    })
-                                    .catch(error => {
-                                        showToast("error", "Something went wrong.");
-                                    });
-                                });
-                                </script>
                         </div>
 
                         <div class="other-log-in">

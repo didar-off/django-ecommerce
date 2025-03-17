@@ -65,8 +65,8 @@
                                     <div class="forgot-box">
                                         <div class="form-check ps-0 m-0 remember-box">
                                             <input class="checkbox_animated check-box" type="checkbox"
-                                                id="flexCheckDefault" required>
-                                            {{form.captcha}}
+                                                id="flexCheckDefault">
+                                                {{form.captcha}}
                                             <label class="form-check-label" for="flexCheckDefault">Remember me</label>
                                         </div>
                                         <a href="forgot.html" class="forgot-password">Forgot Password?</a>
@@ -78,29 +78,6 @@
                                         In</button>
                                 </div>
                             </form>
-
-                            <script>
-                                document.getElementById("loginForm").addEventListener("submit", function(e) {
-                                    e.preventDefault();
-                                
-                                    let formData = new FormData(this);
-                                
-                                    fetch("{% url 'userauths:sign-in' %}", {
-                                        method: "POST",
-                                        body: formData,
-                                        headers: {
-                                            "X-Requested-With": "XMLHttpRequest",
-                                        }
-                                    })
-                                    .then(response => response.json())
-                                    .then(data => {
-                                        showToast(data.status, data.message, data.redirect);
-                                    })
-                                    .catch(error => {
-                                        showToast("error", "Something went wrong.");
-                                    });
-                                });
-                                </script>
                         </div>
 
                         <div class="other-log-in">

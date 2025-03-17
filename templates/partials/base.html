@@ -39,32 +39,6 @@
 </head>
 
 
-<script>
-    function showToast(type, message, redirectUrl = null) {
-        Toast.fire({
-            icon: type,
-            title: message,
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000
-        });
-    
-        if (redirectUrl) {
-            setTimeout(() => {
-                window.location.href = redirectUrl;
-            }, 2000);
-        }
-    }
-
-    {% if messages %}
-        {% for message in message %}
-            showToast("{{message.tags}}", "{{message}}")
-        {% endfor %}
-    {% endif %}
-</script>
-
-
 <body class="bg-effect">
 
     <!-- Loader Start -->
@@ -1234,7 +1208,16 @@
         </ul>
     </div>
     <!-- mobile fix menu end -->
-
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">
+            <strong>{{message}}</strong>
+        </div>
+    {% endfor %}
+    <script>
+        setTimeout (() => {
+            $(".alert").alert("close")
+        }, 5000)
+    </script>
 
     {% block content %}
     {% endblock content %}
