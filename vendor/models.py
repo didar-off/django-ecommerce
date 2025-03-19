@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg, Count
 import uuid
 from shortuuid.django_fields import ShortUUIDField
 from django_ckeditor_5.fields import CKEditor5Field
@@ -47,6 +48,14 @@ class Vendor(models.Model):
         if self.slug == '' or self.slug == None:
             self.slug = slugify(self.store_name)
         super(Vendor, self).save(*args, **kwargs)
+
+    def average_rating(self):
+        from store.models import Product
+        return Product.objects.filter(vendor=self.user, reviews__active=True).aggregate(avg_rating=Avg('reviews__rating'))['avg_rating'] or 0
+    
+    def review_count(self):
+        from store.models import Product
+        return Product.objects.filter(vendor=self.user, reviews__active=True).aggregate(review_count=Count('reviews'))['review_count'] or 0
 
 
 class Payout(models.Model):

@@ -123,12 +123,8 @@ class Product(models.Model):
             self.slug = slugify(self.name) + '-' + str(shortuuid.uuid().lower()[:2])
         super(Product, self).save(*args, **kwargs)
     
-    def average_rating_percentage(self):
-        avg = Review.objects.filter(product=self).aggregate(avg_rating=models.Avg('rating'))['avg_rating']
-        return (avg * 20) if avg is not None else 0
-    
     def average_rating(self):
-        avg = Review.objects.filter(product=self).aggregate(avg_rating=models.Avg('rating'))['avg_rating']
+        avg = Review.objects.filter(product=self, active=True).aggregate(avg_rating=models.Avg('rating'))['avg_rating']
         return avg if avg is not None else 0
     
     def saved(self):

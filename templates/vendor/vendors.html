@@ -1,0 +1,259 @@
+{% extends "partials/base.html" %}
+{% block content %}
+{% load static %}
+
+
+    <!-- Breadcrumb Section Start -->
+    <section class="breadcrumb-section pt-0">
+        <div class="container-fluid-lg">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-contain">
+                        <h2>Seller Grid</h2>
+                        <nav>
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item">
+                                    <a href="index.html">
+                                        <i class="fa-solid fa-house"></i>
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active">Seller Grid</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+
+    <!-- Grid Section Start -->
+    <section class="seller-grid-section">
+        <div class="container-fluid-lg">
+            <div class="row g-4">
+                {% for vendor in vendors %}
+                <div class="col-xxl-4 col-md-6">
+                    <div class="seller-grid-box seller-grid-box-1">
+                        <div class="grid-image">
+                            <div class="image">
+                                <img src="{{vendor.image.url}}" class="img-fluid" alt="">
+                            </div>
+
+                            <div class="contain-name">
+                                <div>
+                                    <div class="since-number">
+                                        <h6>Since {{vendor.date|date:'Y'}}</h6>
+                                        <div class="product-rating">
+                                            <ul class="rating">
+                                                {% if not vendor.average_rating %}
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif vendor.average_rating > 0 and vendor.average_rating < 2 %}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif vendor.average_rating > 1 and vendor.average_rating < 3 %}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif vendor.average_rating > 2 and vendor.average_rating < 4 %}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif vendor.average_rating > 3 and vendor.average_rating < 5 %}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star"></i>
+                                                </li>
+                                                {% elif vendor.average_rating > 4%}
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                <li>
+                                                    <i data-feather="star" class="fill"></i>
+                                                </li>
+                                                {% endif %}
+                                            </ul>
+
+                                            <h6 class="theme-color ms-2">({{vendor.total_reviews}})</h6>
+                                        </div>
+                                    </div>
+                                    <h3>{{vendor.store_name}}</h3>
+                                </div>
+                                <label class="product-label">{{vendor.user.products.count}} Product{{vendor.user.products.count|pluralize}}</label>
+                            </div>
+                        </div>
+
+                        <div class="grid-contain">
+                            <div class="seller-contact-details">
+                                <div class="seller-contact">
+                                    <div class="seller-icon">
+                                        <i class="fa-solid fa-map-pin"></i>
+                                    </div>
+
+                                    <div class="contact-detail">
+                                        <h5>Address: <span> {{vendor.country}}</span></h5>
+                                    </div>
+                                </div>
+
+                                <div class="seller-contact">
+                                    <div class="seller-icon">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </div>
+
+                                    <div class="contact-detail">
+                                        <h5>Contact Us: <span> {{vendor.user.profile.mobile}}</span></h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="seller-category">
+                                <button onclick=""
+                                    class="btn btn-sm theme-bg-color text-white fw-bold">Visit Store <i
+                                        class="fa-solid fa-arrow-right-long ms-2"></i></button>
+                                <ul class="product-image">
+                                    {% for product in vendor.products %}
+                                        <li>
+                                            <img src="{{product.image.url}}" class="img-fluid" alt="{{product.name}}">
+                                        </li>
+                                    {% endfor %}
+
+                                    {% if vendor.total_products > 5 %}
+                                        <li>+{{vendor.total_products|add:"-5"}}</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <nav class="custom-pagination">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="javascript:void(0)" tabindex="-1">
+                            <i class="fa-solid fa-angles-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item active">
+                        <a class="page-link" href="javascript:void(0)">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)">
+                            <i class="fa-solid fa-angles-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+    <!-- Grid Section End -->
+
+    <!-- Newsletter Section Start -->
+    <section class="newsletter-section section-b-space">
+        <div class="container-fluid-lg">
+            <div class="newsletter-box newsletter-box-2">
+                <div class="newsletter-contain py-5">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xxl-4 col-lg-5 col-md-7 col-sm-9 offset-xxl-2 offset-md-1">
+                                <div class="newsletter-detail">
+                                    <h2>Join our newsletter and get...</h2>
+                                    <h5>$20 discount for your first order</h5>
+                                    <div class="input-box">
+                                        <input type="email" class="form-control" id="exampleFormControlInput1"
+                                            placeholder="Enter Your Email">
+                                        <i class="fa-solid fa-envelope arrow"></i>
+                                        <button class="sub-btn  btn-animation">
+                                            <span class="d-sm-block d-none">Subscribe</span>
+                                            <i class="fa-solid fa-arrow-right icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Newsletter Section End -->
+
+
+{% endblock content %}
