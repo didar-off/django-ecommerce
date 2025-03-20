@@ -17,3 +17,15 @@ def vendor_list(request):
     }
 
     return render(request, 'vendor/vendors.html', context)
+
+
+def vendor_detail(request, slug):
+    vendor = vendor_models.Vendor.objects.get(slug=slug)
+    products = store_models.Product.objects.filter(vendor=vendor.user, status='Published')
+
+    context = {
+        'vendor': vendor,
+        'products': products,
+    }
+
+    return render(request, 'vendor/vendor-detail.html', context)

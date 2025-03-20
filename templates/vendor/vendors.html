@@ -144,7 +144,7 @@
                                                 {% endif %}
                                             </ul>
 
-                                            <h6 class="theme-color ms-2">({{vendor.total_reviews}})</h6>
+                                            <h6 class="theme-color ms-2">({{vendor.total_reviews}} Review{{vendor.total_reviews|pluralize}})</h6>
                                         </div>
                                     </div>
                                     <h3>{{vendor.store_name}}</h3>
@@ -177,9 +177,9 @@
                             </div>
 
                             <div class="seller-category">
-                                <button onclick=""
+                                <a href="{% url "vendor:vendor-detail" vendor.slug %}"
                                     class="btn btn-sm theme-bg-color text-white fw-bold">Visit Store <i
-                                        class="fa-solid fa-arrow-right-long ms-2"></i></button>
+                                        class="fa-solid fa-arrow-right-long ms-2"></i></a>
                                 <ul class="product-image">
                                     {% for product in vendor.products %}
                                         <li>

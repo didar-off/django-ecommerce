@@ -36,7 +36,7 @@ class User(AbstractUser):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     image = models.ImageField(upload_to=user_directory_path, default='default-profile.jpg', null=True, blank=True)
     full_name = models.CharField(max_length=200, null=True, blank=True)
     mobile = models.CharField(max_length=50, null=True, blank=True)
