@@ -245,7 +245,7 @@ class Order(models.Model):
     initial_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, help_text='The original total before discounts')
     saved = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, null=True, blank=True, help_text='Amount saved with coupon')
 
-    address = models.ForeignKey('customer.Address', on_delete=models.SET_NULL, null=True)
+    address = models.ForeignKey('customer.Address', on_delete=models.SET_NULL, null=True, blank=True)
     coupons = models.ManyToManyField(Coupon, blank=True)
 
     order_id = ShortUUIDField(max_length=10, length=5, alphabet='1234567890')

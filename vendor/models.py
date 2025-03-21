@@ -6,11 +6,14 @@ from django_ckeditor_5.fields import CKEditor5Field
 from userauths.models import User
 from django.utils.text import slugify
 
+from store import models as store_models
+
 
 NOTIFICATION_TYPE = (
     ('New Order', 'New Order'),
     ('New Review', 'New Review'),
 )
+
 
 PAYOUT_METHOD = (
     ('Cash', 'Cash'),
@@ -20,6 +23,7 @@ PAYOUT_METHOD = (
     ('Paystack', 'Paystack'),
     ('RazorPay', 'RazorPay'),
 )
+
 
 TYPE = (
     ('New Order', 'New Order'),
@@ -50,12 +54,12 @@ class Vendor(models.Model):
         super(Vendor, self).save(*args, **kwargs)
 
     def average_rating(self):
-        from store.models import Product
-        return Product.objects.filter(vendor=self.user, reviews__active=True).aggregate(avg_rating=Avg('reviews__rating'))['avg_rating'] or 0
+        avg = store_models.Product.objects.filter(vendor=self.user, reviews__active=True).aggregate(avg_rating=Avg('reviews__rating'))['avg_rating']
+        return avg if avg is not None else 0
     
     def review_count(self):
-        from store.models import Product
-        return Product.objects.filter(vendor=self.user, reviews__active=True).aggregate(review_count=Count('reviews'))['review_count'] or 0
+        rw_count = store_models.Product.objects.filter(vendor=self.user, reviews__active=True).aggregate(review_count=Count('reviews'))['review_count']
+        return rw_count if rw_count is not None else 0
 
 
 class Payout(models.Model):
