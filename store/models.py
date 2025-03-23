@@ -238,9 +238,9 @@ class Order(models.Model):
     service_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, null=True, blank=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, null=True, blank=True)
 
-    payment_status = models.CharField(max_length=100, choices=PAYMENT_STATUS, default='Processing')
-    payment_method = models.CharField(max_length=100, choices=PAYMENT_METHOD, default='Cash', null=True, blank=True)
-    order_status = models.CharField(max_length=100, choices=ORDER_STATUS, default='Pending')
+    payment_status = models.CharField(max_length=50, choices=PAYMENT_STATUS, default='Processing')
+    payment_method = models.CharField(max_length=50, choices=PAYMENT_METHOD, default='Cash', null=True, blank=True)
+    order_status = models.CharField(max_length=50, choices=ORDER_STATUS, default='Pending')
 
     initial_total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, help_text='The original total before discounts')
     saved = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, null=True, blank=True, help_text='Amount saved with coupon')

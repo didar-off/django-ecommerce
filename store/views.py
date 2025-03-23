@@ -202,7 +202,7 @@ def create_order(request):
         order.total = order.sub_total + order.shipping + Decimal(order.tax)
         order.service_fee = calculate_service_fee(order.total)
         order.total += order.service_fee
-        order.initial_total = order.total
+        # order.initial_total = order.total
         order.save()
 
         for i in items:
@@ -234,3 +234,52 @@ def checkout(request, order_id):
     }
 
     return render(request, 'store/checkout.html', context)
+
+
+def coupon_apply(request, order_id):
+
+    try:
+        order = store_models.Order.objects.get(order_id=order_id)
+        order_items = store_models.OrderItem.objects.filter(order=order)
+    except store_models.Order.DoesNotExist:
+        return redirect('store:checkout')
+    
+    if request.method == 'POST':
+        coupon_code = request.POST.get('coupon_code')
+
+        if not coupon_code:
+            messages.error(request, 'No coupon entered')
+            return redirect('store:checkout', order.order_id)
+        
+        try:
+            coupon = store_models.Coupon.objects.get(code=coupon_code)
+        except store_models.Coupon.DoesNotExist:
+            messages.error(request, "Coupon does not exist")
+            return redirect('store:checkout', order.order_id)
+        
+        if coupon in order.coupons.all():
+            messages.error(request, 'Coupon already activated')
+            return redirect('store:checkout', order.order_id)
+        else:
+            total_discount = 0
+
+            for item in order_items:
+                if coupon.vendor == item.product.vendor and coupon not in item.coupon.all():
+                    item_discount = item.total * coupon.discount / 100
+                    total_discount += item_discount
+
+                    item.coupon.add(coupon)
+                    item.total -= item_discount
+                    item.saved += item_discount
+                    item.save()
+
+            if total_discount > 0:
+                order.coupons.add(coupon)
+                order.total -= total_discount
+                order.sub_total -= total_discount
+                order.saved += total_discount
+                order.save()
+
+        messages.success(request, 'Coupon activated')
+        return redirect('store:checkout', order.order_id)
+

@@ -577,7 +577,7 @@
                                 </li>
 
                                 {% for coupon in order.coupon.all %}
-                                    <small class="text-success fw-bold">{{coupon.code}}</small>
+                                    <small class="text-success fw-bold">{{coupon.code}} Applied</small>
                                 {% endfor %}
 
                                 {% endif %}
@@ -590,23 +590,15 @@
                         </div>
 
                         <div class="checkout-offer">
-                            <div class="offer-title">
-                                <div class="offer-icon">
-                                    <img src="{% static 'assets/images/inner-page/offer.svg' %}" class="img-fluid" alt="">
+                            <form class="coupon-cart" method="POST" action="{% url "store:coupon-apply" order.order_id %}">
+                                {% csrf_token %}
+                                <h6 class="text-content mb-2">Coupon Apply</h6>
+                                <div class="mb-3 coupon-box input-group">
+                                    <input type="text" class="form-control" id="exampleFormControlInput1" name="coupon_code"
+                                        placeholder="Enter Coupon Code Here...">
+                                    <button type="submit" class="btn-apply">Apply</button>
                                 </div>
-                                <div class="offer-name">
-                                    <h6>Available Offers</h6>
-                                </div>
-                            </div>
-
-                            <ul class="offer-detail">
-                                <li>
-                                    <p>Combo: BB Royal Almond/Badam Californian, Extra Bold 100 gm...</p>
-                                </li>
-                                <li>
-                                    <p>combo: Royal Cashew Californian, Extra Bold 100 gm + BB Royal Honey 500 gm</p>
-                                </li>
-                            </ul>
+                            </form>
                         </div>
 
                         <button class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold">Place Order</button>
