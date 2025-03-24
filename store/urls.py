@@ -20,4 +20,6 @@ urlpatterns = [
     path('create-order/', views.create_order, name='create-order'),
     path('checkout/<order_id>/', views.checkout, name='checkout'),
     path('coupon-apply/<order_id>/', views.coupon_apply, name='coupon-apply'),
+    path('order-verify/<order_id>/', views.order_verify, name='order-verify'),
+    path('payment-status/<order_id>/', views.payment_status, name='payment-status'),
 ]

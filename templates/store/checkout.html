@@ -601,7 +601,10 @@
                             </form>
                         </div>
 
-                        <button class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold">Place Order</button>
+                        <form method="POST" action="{% url "store:order-verify" order.order_id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn theme-bg-color text-white btn-md w-100 mt-4 fw-bold">Place Order</button>
+                        </form>
                     </div>
                 </div>
             </div>

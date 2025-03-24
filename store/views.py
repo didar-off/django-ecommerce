@@ -134,6 +134,16 @@ def cart(request):
     return render(request, 'store/cart.html', context)
 
 
+def clear_cart_items(request):
+    try:
+        cart_id = request.session['cart_id']
+        store_models.Cart.objects.filter(cart_id=cart_id).delete()
+    except:
+        pass
+
+    return
+
+
 def delete_cart_item(request):
     id = request.GET.get('id')
     item_id = request.GET.get('item_id')
@@ -283,3 +293,30 @@ def coupon_apply(request, order_id):
         messages.success(request, 'Coupon activated')
         return redirect('store:checkout', order.order_id)
 
+
+def order_verify(request, order_id):
+    order = store_models.Order.objects.get(order_id=order_id)
+    if request.method == 'POST':
+        payment_method = 'Cash'
+        if order.payment_status == 'Processing':
+            order.payment_status = 'Paid'
+            order.payment_method = payment_method
+            order.save()
+            clear_cart_items(request)
+            return redirect(f'/payment-status/{order.order_id}/?payment-status=Paid')
+    else:
+        order.payment_status = 'Failed'
+        order.save()
+        return redirect(f'/payment-status/{order.order_id}/?payment-status=Failed')
+    
+
+def payment_status(request, order_id):
+    order = store_models.Order.objects.get(order_id=order_id)
+    payment_status = request.GET.get('payment_status')
+
+    context = {
+        'order': order,
+        'payment_status': payment_status
+    }
+
+    return render(request, 'store/payment-status.html', context)
